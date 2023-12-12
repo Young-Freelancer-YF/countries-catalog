@@ -1,15 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observer } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CountryService {
-  // constructor(
-  //   private http: HttpClient
-  // ) {}
+  private apiUrl = 'https://restcountries.com/v3.1/all';
 
-  // getCountry(): Observer<any[]> {
+  constructor(private http: HttpClient) {}
 
-  // }
+  getCountries(param: any): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl, { params: param });
+  }
 }
