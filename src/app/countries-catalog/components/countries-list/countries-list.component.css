@@ -1,6 +1,6 @@
 .countries-list {
   margin-bottom: 5rem;
-  margin-top: 10rem;
+  margin-top: 2rem;
 }
 
 .countries-list .table-list {
@@ -21,4 +21,9 @@ th.mat-sort-header-sorted {
 
 table th.mat-column-cca2 {
   flex: 0 0 50px !important;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
 }

@@ -10,6 +10,8 @@ import { CountryService } from '../../services/country.service';
 import { Subscription } from 'rxjs';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-countries-list',
@@ -21,6 +23,7 @@ export class CountriesListComponent
 {
   private unsubscribe: Subscription[] = [];
   contriesList: any;
+  resultsLength = 0;
   displayedColumns: string[] = [
     'no',
     'flags',
@@ -46,7 +49,7 @@ export class CountriesListComponent
 
   getCountries() {
     const sub = this.countryService.getCountries({}).subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res);
+      this.dataSource = new MatTableDataSource(res.slice(25));
     });
 
     this.unsubscribe.push(sub);
@@ -54,6 +57,15 @@ export class CountriesListComponent
 
   ngAfterViewInit() {
     // this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   announceSortChange(sortState: Sort) {
