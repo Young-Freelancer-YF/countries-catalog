@@ -9,6 +9,8 @@ const routes: Routes = [
         (m) => m.CountriesCatalogModule
       ),
   },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({
