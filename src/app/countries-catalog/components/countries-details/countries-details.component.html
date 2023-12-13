@@ -1,1 +1,309 @@
-<p>countries-details works!</p>
+<div class="container">
+  <h1 mat-dialog-title class="mb-2 mt-2" style="font-size: 1.8rem">
+    Informations
+  </h1>
+  <div
+    class="d-flex justify-content-center align-items-center h-auto"
+    *ngIf="loading"
+  >
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-dialog-content class="mat-typography" *ngIf="!loading">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="fw-bolder mb-0 title-detail">Official Name</h3>
+          </div>
+          <div class="col-md-7">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.name?.official }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="fw-bolder mb-0 title-detail">Common Name</h3>
+          </div>
+          <div class="col-md-7">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.name?.common }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="fw-bolder mb-0 title-detail">Native Country Name:</h3>
+          </div>
+          <div class="col-md-7">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark"> :</span>
+              <span class="title-detail-item">
+                <ul>
+                  <li
+                    *ngFor="let name of getNativeNames(data?.name?.nativeName)"
+                  >
+                    {{ name.common }}
+                  </li>
+                </ul>
+              </span>
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="fw-bolder mb-0 title-detail">
+              Alternative Country Name
+            </h3>
+          </div>
+          <div class="col-md-7">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.altSpellings }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="fw-bolder mb-0 title-detail">Currencies</h3>
+          </div>
+          <div class="col-md-7">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark"> :</span>
+              <span class="title-detail-item">
+                <ul>
+                  <li *ngFor="let name of getNativeNames(data?.currencies)">
+                    {{ name.name }}
+                    <span class="fw-bold"> ({{ name.symbol }})</span>
+                  </li>
+                </ul>
+              </span>
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <h4 class="fw-bold">Flag:</h4>
+        <img
+          [src]="data?.flags?.png"
+          [alt]="data?.flags?.alt"
+          style="width: 16rem; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px"
+        />
+      </div>
+    </div>
+
+    <mat-divider
+      class="fw-bolder mt-3 mb-3"
+      style="border-top-width: 2px"
+    ></mat-divider>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">
+              2 Character Country Code
+            </h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.cca2 }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">
+              3 Character Country Code
+            </h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.cca3 }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Country Calling Codes</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <ng-container
+                *ngFor="let item of data?.idd?.suffixes; let i = index"
+              >
+                <ng-container *ngIf="i + 1 < 5">
+                  <div class="fw-normal text-dark title-detail-item">
+                    <span> : {{ data.idd.root }}</span>
+                    <span>{{ item }}</span>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="fw-bolder mb-0 title-detail">Languages</h3>
+          </div>
+          <div class="col-md-7">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark"> :</span>
+              <span class="title-detail-item">
+                <ul>
+                  <li *ngFor="let name of getNativeNames(data?.languages)">
+                    {{ name }}
+                  </li>
+                </ul>
+              </span>
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Capital</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.cca3 }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Continents</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.continents }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Timezones</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.timezones }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Start Of Week</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.startOfWeek | uppercase }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Population</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.population | number }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Subregion</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.subregion }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Borders</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.borders }}</span
+              >
+            </h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0 title-detail">Area</h3>
+          </div>
+          <div class="col-md-6">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark title-detail-item">
+                : {{ data?.area | number }} Km</span
+              >
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-5">
+            <h3 class="fw-bolder mb-0 title-detail">Translations</h3>
+          </div>
+          <div class="col-md-7">
+            <h3 class="fw-bolder mb-0">
+              <span class="text-dark"> :</span>
+              <span class="title-detail-item">
+                <ul>
+                  <li *ngFor="let name of getNativeNames(data?.translations)">
+                    {{ name.common }}
+                  </li>
+                </ul>
+              </span>
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="mb-4">
+    <button mat-raised-button mat-dialog-close color="warn">Cancel</button>
+  </mat-dialog-actions>
+</div>

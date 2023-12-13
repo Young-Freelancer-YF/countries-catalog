@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CountriesListComponent } from './components/countries-list/countries-list.component';
+import { CountriesDetailsComponent } from './components/countries-details/countries-details.component';
 
 const routes: Routes = [
   {
