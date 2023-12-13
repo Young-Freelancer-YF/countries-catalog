@@ -2,6 +2,11 @@
   <h1 mat-dialog-title class="mb-2 mt-2" style="font-size: 1.8rem">
     Informations
   </h1>
+  <mat-divider
+    class="fw-bolder mt-3 mb-3"
+    style="border-top-width: 2px"
+  ></mat-divider>
+
   <div
     class="d-flex justify-content-center align-items-center h-auto"
     *ngIf="loading"
@@ -103,12 +108,8 @@
       </div>
     </div>
 
-    <mat-divider
-      class="fw-bolder mt-3 mb-3"
-      style="border-top-width: 2px"
-    ></mat-divider>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
             <h3 class="fw-bolder mb-0 title-detail">
@@ -281,7 +282,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="row">
           <div class="col-md-5">
             <h3 class="fw-bolder mb-0 title-detail">Translations</h3>
@@ -300,7 +301,6 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4"></div>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end" class="mb-4">
